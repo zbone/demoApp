@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统备忘记录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #4299e1;
+        }
+        
+        h1 {
+            color: #2d3748;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #718096;
+            font-size: 1rem;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid #4299e1;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title i {
+            margin-right: 10px;
+            color: #4299e1;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .info-value {
+            padding: 10px;
+            background-color: #f7fafc;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            position: relative;
+            overflow-x: auto;
+            word-break: break-all;
+        }
+        
+        .info-value:hover .copy-btn {
+            opacity: 1;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #4299e1;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #3182ce;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .badge-k3s {
+            background-color: #e8f4f8;
+            color: #4299e1;
+        }
+        
+        .badge-mysql {
+            background-color: #f0f8fb;
+            color: #38b2ac;
+        }
+        
+        .badge-redis {
+            background-color: #fdf2f8;
+            color: #9f7aea;
+        }
+        
+        .badge-mongodb {
+            background-color: #f5fafe;
+            color: #48bb78;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .copied {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #48bb78;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        @media (max-width: 768px) {
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>系统备忘记录</h1>
+            <p class="subtitle">重要的系统连接信息和凭证</p>
+        </header>
+        
+        <div class="card-container">
+            <!-- K3s桌面卡片 -->
+            <div class="card">
+                <div class="card-title">
+                    <span>K3s桌面</span>
+                    <span class="badge badge-k3s">Kubernetes</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">地址</span>
+                    <div class="info-value">
+                        <span>https://pretelephonic-zita-pyrosulfuric.ngrok-free.dev/k3s</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">账号</span>
+                    <div class="info-value">
+                        <span>admin-user</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">账号token</span>
+                    <div class="info-value">
+                        <span>eyJhbGciOiJSUzI1NiIsImtpZCI6IlRScTFGMjFwTnk5dHp3OGlwWDVQdHFIQlByUy14elg3UFBLZHRBb0ExVmMifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiLCJrM3MiXSwiZXhwIjoxNzY0MjYxMjcwLCJpYXQiOjE3NjQyNTc2NzAsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiMjYxZGEwYjQtYzlhNi00NTQxLWIyMjAtYzdlZTgzM2U5ZjRlIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiZGM3MzRhZWItYzNlMS00NjA2LWI5ODMtNjUwNjc3NWVkZDc3In19LCJuYmYiOjE3NjQyNTc2NzAsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDphZG1pbi11c2VyIn0.lyrVNO-o0ogaUwF0x8TAA1gFkB-uhxz1nBpEdN1paHllDAq8hJU4AdsL5b2vP6nnS2xtdXDxZnMMzwcCEgDF3fb2aFd7BwdBJXji3e2Kru98LNRIvcBThpOEWGY-218XQLVdoXUCZW1DqnfBKCYvMMnjhKA9kaLi68Iz6POqYyvZ8QMWP-1IB2TB46xzyVXaNpptuMjEQ1xrVLVZYqpmy7bl5EVqXfnCdy_1QWjCbGdxag1y8fuGaD4Zzd8VHi_WhZ-KtPCX6zxSbPDBudWStoPJbpT2XoidxNsXujPzaeahwWQRvuOwliMgMp-CT84d3QA9jzvA3fGqjuGWaT0Ljw</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MySQL 1卡片 -->
+            <div class="card">
+                <div class="card-title">
+                    <span>MySQL (30007)</span>
+                    <span class="badge badge-mysql">数据库</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">主机</span>
+                    <div class="info-value">
+                        <span>192.168.31.60</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">端口</span>
+                    <div class="info-value">
+                        <span>30007</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">账号</span>
+                    <div class="info-value">
+                        <span>root</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">密码</span>
+                    <div class="info-value">
+                        <span>k3sMysql123</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Redis/MySQL 2卡片 -->
+            <div class="card">
+                <div class="card-title">
+                    <span>Redis/MySQL (30079)</span>
+                    <span class="badge badge-redis">缓存/数据库</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">主机</span>
+                    <div class="info-value">
+                        <span>192.168.31.60</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">端口</span>
+                    <div class="info-value">
+                        <span>30079</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">密码</span>
+                    <div class="info-value">
+                        <span>k3sRedis123</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MongoDB卡片 -->
+            <div class="card">
+                <div class="card-title">
+                    <span>MongoDB</span>
+                    <span class="badge badge-mongodb">文档数据库</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">主机</span>
+                    <div class="info-value">
+                        <span>192.168.31.60</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">端口</span>
+                    <div class="info-value">
+                        <span>30017</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">账号</span>
+                    <div class="info-value">
+                        <span>root</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">密码</span>
+                    <div class="info-value">
+                        <span>k3sMongo123</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>最后更新时间: 2025年12月3日</p>
+            <p>⚠️ 请妥善保管这些敏感信息</p>
+        </footer>
+    </div>
+    
+    <div class="copied" id="copiedMessage">已复制!</div>
+    
+    <script>
+        function copyToClipboard(button) {
+            // 获取要复制的文本
+            const valueElement = button.parentElement.querySelector('span');
+            const text = valueElement.textContent.trim();
+            
+            // 复制到剪贴板
+            navigator.clipboard.writeText(text).then(() => {
+                // 显示复制成功提示
+                const message = document.getElementById('copiedMessage');
+                message.style.opacity = '1';
+                
+                // 3秒后隐藏提示
+                setTimeout(() => {
+                    message.style.opacity = '0';
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败:', err);
+                alert('复制失败，请手动复制');
+            });
+        }
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
